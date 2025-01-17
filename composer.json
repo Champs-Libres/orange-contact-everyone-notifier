@@ -1,0 +1,36 @@
+{
+    "name": "champs-libres/orange-contact-everyone-notifier",
+    "description": "Symfony Bridge to use Orange Contact Everyone Business with Notifier Component",
+    "type": "symfony-notifier-bridge",
+    "keywords": ["sms", "notifier", "OrangeBusiness"],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Symfony\\Component\\Notifier\\Bridge\\OrangeContactEveryone\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Symfony\\Component\\Notifier\\Bridge\\OrangeContactEveryone\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Julien Fastré",
+            "email": "julien.fastre@champs-libres.coop"
+        }
+    ],
+    "require": {
+        "php": ">7.4.0",
+        "symfony/http-client": "^4.3|^5.0|^6.0",
+        "symfony/notifier": "^5.4.45",
+        "symfony/event-dispatcher-contracts": "^2|^3",
+        "symfony/cache": "^5.4|^6.0|^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "scripts": {
+        "cs": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src"
+    }
+}
