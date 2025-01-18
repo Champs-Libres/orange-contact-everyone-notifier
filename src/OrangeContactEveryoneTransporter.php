@@ -3,7 +3,6 @@
 namespace Symfony\Component\Notifier\Bridge\OrangeContactEveryone;
 
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\Notifier\Exception\TransportException;
 use Symfony\Component\Notifier\Message\MessageInterface;
 use Symfony\Component\Notifier\Message\SentMessage;
@@ -11,7 +10,6 @@ use Symfony\Component\Notifier\Message\SmsMessage;
 use Symfony\Component\Notifier\Transport\AbstractTransport;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -47,7 +45,7 @@ class OrangeContactEveryoneTransporter extends AbstractTransport
 
     private function getToken(): string
     {
-        return $this->cache->get('orange-business-contact-everyone-token', function (ItemInterface $item) {
+        return $this->cache->get('orange-contact-everyone-token', function (ItemInterface $item) {
             $response = $this->client->request(
                 'POST',
                 sprintf('https://%s/api/v1.2/oauth/token', $this->getEndpoint()),
