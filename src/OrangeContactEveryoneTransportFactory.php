@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Component\Notifier\Bridge\OrangeContactEveryone;
+namespace ChampsLibres\Notifier\Bridge\OrangeContactEveryone;
 
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Notifier\Exception\IncompleteDsnException;

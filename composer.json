@@ -6,12 +6,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Symfony\\Component\\Notifier\\Bridge\\OrangeContactEveryone\\": "src/"
+            "ChampsLibres\\Notifier\\Bridge\\OrangeContactEveryone\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Symfony\\Component\\Notifier\\Bridge\\OrangeContactEveryone\\Tests\\": "tests/"
+            "Tests\\ChampsLibres\\Notifier\\Bridge\\OrangeContactEveryone\\": "tests/"
         }
     },
     "authors": [

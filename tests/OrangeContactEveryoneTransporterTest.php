@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Notifier\Bridge\OrangeContactEveryone\Tests;
+namespace Tests\ChampsLibres\Notifier\Bridge\OrangeContacEveryone;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\JsonMockResponse;
 use Symfony\Component\Notifier\Message\SmsMessage;
-use Symfony\Component\Notifier\Bridge\OrangeContactEveryone\OrangeContactEveryoneTransporter;
+use ChampsLibres\Notifier\Bridge\OrangeContactEveryone\OrangeContactEveryoneTransporter;
 
 #[CoversClass(OrangeContactEveryoneTransporter::class)]
 class OrangeContactEveryoneTransporterTest extends TestCase

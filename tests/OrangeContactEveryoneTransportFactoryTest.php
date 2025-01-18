@@ -1,11 +1,11 @@
 <?php
 
-namespace Symfony\Component\Notifier\Bridge\Tests\OrangeContactEveryoneTransport;
+namespace Tests\ChampsLibres\Notifier\Bridge\OrangeContacEveryone;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Notifier\Test\TransportFactoryTestCase;
-use Symfony\Component\Notifier\Bridge\OrangeContactEveryone\OrangeContactEveryoneTransportFactory;
+use ChampsLibres\Notifier\Bridge\OrangeContactEveryone\OrangeContactEveryoneTransportFactory;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[CoversClass(OrangeContactEveryoneTransportFactory::class)]
