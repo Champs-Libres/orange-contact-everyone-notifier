@@ -13,33 +13,12 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class OrangeContactEveryoneTransporter extends AbstractTransport
+final class OrangeContactEveryoneTransporter extends AbstractTransport
 {
     protected const HOST = 'contact-everyone.orange-business.com';
-    /**
-     * @var string
-     */
-    private $username;
 
-    /**
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @var string
-     */
-    private $idGroup;
-
-    private AdapterInterface $cache;
-
-    public function __construct($username, $password, $idGroup, AdapterInterface $cache, ?HttpClientInterface $client = null, ?EventDispatcherInterface $dispatcher = null)
+    public function __construct(private readonly string $username, private readonly string $password, private readonly string $idGroup, private AdapterInterface $cache, ?HttpClientInterface $client = null, ?EventDispatcherInterface $dispatcher = null)
     {
-        $this->username = $username;
-        $this->password = $password;
-        $this->idGroup = $idGroup;
-        $this->cache = $cache;
-
         parent::__construct($client, $dispatcher);
     }
 
@@ -48,7 +27,7 @@ class OrangeContactEveryoneTransporter extends AbstractTransport
         return $this->cache->get('orange-contact-everyone-token', function (ItemInterface $item) {
             $response = $this->client->request(
                 'POST',
-                sprintf('https://%s/api/v1.2/oauth/token', $this->getEndpoint()),
+                \sprintf('https://%s/api/v1.2/oauth/token', $this->getEndpoint()),
                 [
                     'headers' => ['Accept' => 'application/json'],
                     'body' => ['username' => $this->username, 'password' => $this->password],
@@ -62,7 +41,7 @@ class OrangeContactEveryoneTransporter extends AbstractTransport
             }
 
             if (200 !== $statusCode) {
-                throw new TransportException(sprintf('Unable to get the authentication token: %s.', $statusCode), $response);
+                throw new TransportException(\sprintf('Unable to get the authentication token: %s.', $statusCode), $response);
             }
 
             $success = $response->toArray(false);
@@ -81,15 +60,15 @@ class OrangeContactEveryoneTransporter extends AbstractTransport
             'smsParam' => [
                 'encoding' => 'GSM7',
                 'body' => $message->getSubject(),
-            ]
+            ],
         ];
 
         $response = $this->client->request(
             'POST',
-            sprintf('https://%s/api/v1.2/groups/%s/diffusion-requests', $this->getEndpoint(), $this->idGroup),
+            \sprintf('https://%s/api/v1.2/groups/%s/diffusion-requests', $this->getEndpoint(), $this->idGroup),
             [
-                'headers' => ['Accept' => 'application/json', 'Authorization' => 'Bearer ' . $this->getToken()],
-                'json' => $body
+                'headers' => ['Accept' => 'application/json', 'Authorization' => 'Bearer '.$this->getToken()],
+                'json' => $body,
             ]
         );
 
@@ -100,30 +79,20 @@ class OrangeContactEveryoneTransporter extends AbstractTransport
         }
 
         if (201 !== $statusCode) {
-            throw new TransportException(
-                sprintf(
-                    'Unable to send the SMS: statusCode: %s, errors: %s',
-                    $statusCode,
-                    implode(
-                        ', ',
-                        array_map(function ($error) {
-                            $str = '';
-                            foreach ($error as $k => $v) {
-                                $str .= sprintf(' %s: %s', $k, $v);
-                            }
+            throw new TransportException(\sprintf('Unable to send the SMS: statusCode: %s, errors: %s', $statusCode, implode(', ', array_map(function ($error) {
+                $str = '';
+                foreach ($error as $k => $v) {
+                    $str .= \sprintf(' %s: %s', $k, $v);
+                }
 
-                            return $str;
-                        }, $response->toArray(false))
-                    ),
-                ),
-                $response
-            );
+return $str;
+            }, $response->toArray(false)))), $response);
         }
 
         $success = $response->toArray(false);
 
         if (!isset($success['id'])) {
-            throw new TransportException(sprintf('Unable to get the id'), $response);
+            throw new TransportException('Unable to get the id', $response);
         }
 
         $sentMessage = new SentMessage($message, (string) $this);
@@ -139,8 +108,6 @@ class OrangeContactEveryoneTransporter extends AbstractTransport
 
     public function __toString(): string
     {
-        return sprintf("orangeContactEveryone://%s@%s?idGroup=%s", $this->username, $this->getEndpoint(), $this->idGroup);
+        return \sprintf('orangeContactEveryone://%s@%s?idGroup=%s', $this->username, $this->getEndpoint(), $this->idGroup);
     }
-
-
 }
