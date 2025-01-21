@@ -85,7 +85,7 @@ final class OrangeContactEveryoneTransporter extends AbstractTransport
                     $str .= \sprintf(' %s: %s', $k, $v);
                 }
 
-return $str;
+                return $str;
             }, $response->toArray(false)))), $response);
         }
 
