@@ -49,5 +49,7 @@ jobs:
       - name: Show installed Symfony versions
         run: composer show 'symfony/*' | grep -E '^symfony/(notifier|http-client|cache) '
 
+      # Symfony 6.4's TransportFactoryTestCase uses @dataProvider annotations,
+      # which PHPUnit 11 reports as (non-blocking) deprecations.
       - name: Run tests
-        run: vendor/bin/phpunit --exclude-group integration
+        run: vendor/bin/phpunit --exclude-group integration --do-not-fail-on-phpunit-deprecation
